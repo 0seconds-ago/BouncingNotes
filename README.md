@@ -1,7 +1,9 @@
 # BouncingNotes
+
     Max jweb 오브젝트를 이용해 p5.js 프로젝트 실행하기
 
 # p5.js name space
+
     p5.js 프로젝트를 그대로 맥스 오브젝트와 양방향 상호작용 하려하면 
     Max API 와 P5js API 간의 충돌로 인해 실행되지 않는다
 
