@@ -22,6 +22,16 @@ let s = (function(p) {
   let stroke_r = 255; let stroke_g = 255; let stroke_b = 255;
   let opaqueFlag = true;
 
+
+  let v1 = 0;
+  let v2 = 0;
+  let v3 = 0;
+  let v4 = 0;
+
+  let _v1scaled = 0.99;
+  
+
+
   let ball;
   let balls = [];
   let rightWall = 300;
@@ -35,13 +45,24 @@ let s = (function(p) {
     p.createCanvas(p.windowWidth, p.windowHeight);
 
     if(maxIsDetected) {
+
+      window.max.bindInlet('set_value',function(_v1, _v2, _v3, _v4) {
+        v1 = _v1;
+        _v1scaled = p.map(_v1, 0, 100, 0, 1);
+        v2 = _v2; 
+        v3 = _v3;
+        v4 = _v4;
+        
+      });
+
+
       window.max.bindInlet('set_background_color', function (_r, _g, _b) {
         background_r = _r; background_g = _g; background_b = _b;
         if(opaqueFlag) p.background(background_r, background_g, background_b);
       });
       window.max.bindInlet('set_opaque', function (_flag) {
         opaqueFlag = _flag;
-       
+      
         if(!opaqueFlag) p.clear();
       });
       window.max.bindInlet('set_stroke_color', function (_r, _g, _b) {
@@ -95,6 +116,9 @@ let s = (function(p) {
       window.max.outlet('status_dict_updated');
     }
 
+    p.text(_v1scaled, 10, p.windowHeight - 10);
+    
+
   }
 
   p.mousePressed = function() {
@@ -115,7 +139,8 @@ let s = (function(p) {
 
     update() {
       this.vel.add(this.acc);
-      this.vel.mult(0.99);
+      //?this.vel.mult(0.99);
+      this.vel.mult(_v1scaled);
       this.pos.add(this.vel);
     }
 
